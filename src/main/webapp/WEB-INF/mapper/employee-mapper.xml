@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper.java namespace -->
+<mapper namespace="com.taufik.mapper.EmployeeMapper">
+
+	<insert id="save" parameterType="com.taufik.model.Employee">
+		INSERT INTO employee(user_id,
+		nama, email,notelp,alamat) VALUES (#{userid, jdbcType=VARCHAR},
+		#{name,
+		jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},#{notelp,
+		jdbcType=VARCHAR},#{alamat, jdbcType=VARCHAR})
+	</insert>
+
+	<resultMap type="com.taufik.model.Employee" id="Employee">
+		<!-- map table "CATEGORI" column to class "Categori" property -->
+		<result column="user_id" property="userid" />
+		<result column="nama" property="name" />
+		<result column="email" property="email" />
+		<result column="notelp" property="notelp" />
+	</resultMap>
+
+	<select id="getAllCategori" resultMap="Employee">
+		SELECT C.user_id AS
+		userid, C.nama AS name, C.email, C.notelp FROM employee C
+	</select>
+
+	<select id="getSingleCategori" resultType="com.taufik.model.Employee"
+		parameterType="int">
+		SELECT C.user_id as userid, C.nama as name,
+		C.email,
+		C.notelp,C.alamat FROM employee C WHERE
+		C.user_id = #{ID}
+	</select>
+
+	<update id="update" parameterType="com.taufik.model.Employee">
+		UPDATE employee SET
+		nama=#{name, jdbcType=VARCHAR},
+		notelp=#{notelp, jdbcType=VARCHAR},
+		email=#{email, jdbcType=NUMERIC}
+		WHERE user_id=#{userid}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM employee
+		WHERE user_id = #{userid}
+	</delete>
+
+</mapper>
